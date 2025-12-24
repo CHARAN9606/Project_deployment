@@ -1,6 +1,13 @@
 import sys
 import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from fastapi import FastAPI
+
+app = FastAPI()
+
+@app.get("/")
+def health_check():
+    return {"status": "Backend is running"}
 
 from pathlib import Path
 from parser import parse_file
@@ -201,4 +208,5 @@ def list_resumes():
 @app.post("/update_keywords/")
 def update_keywords(query: str):
     keywords = save_domain_keywords(query)
+
     return {"query": query, "keywords": keywords}
